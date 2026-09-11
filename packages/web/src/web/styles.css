@@ -1,0 +1,142 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/*
+ * Palette sampled from the inspiration image with imagemagick — see design.md.
+ * Hex, not oklch, on purpose: these are measured values and hex keeps them
+ * checkable against the reference. Do not "modernise" them into oklch.
+ *
+ * Cards carry NO border: separation is #FFFFFF on #F2F4F5 plus --shadow-card.
+ */
+:root {
+  --radius: 6px;
+  --background: #f2f4f5;
+  --foreground: #434548;
+  --card: #ffffff;
+  --card-foreground: #434548;
+  --popover: #ffffff;
+  --popover-foreground: #434548;
+  --primary: #2260f6;
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #666666;
+  --muted: #f7f9fa;
+  --muted-foreground: #7c7c7c;
+  --accent: #eef3fe;
+  --accent-foreground: #2260f6;
+  --success: #59d05d;
+  --success-foreground: #ffffff;
+  --warning: #f9af4f;
+  --warning-foreground: #ffffff;
+  --destructive: #fd686d;
+  --destructive-foreground: #ffffff;
+  --border: #e9ecef;
+  --input: #e9ecef;
+  --ring: #2260f6;
+  --chart-1: #2260f6;
+  --chart-2: #59d05d;
+  --chart-3: #f9af4f;
+  --chart-4: #fd686d;
+  --chart-5: #1c64e4;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #434548;
+  --sidebar-primary: #2260f6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef3fe;
+  --sidebar-accent-foreground: #2260f6;
+  --sidebar-border: #e9ecef;
+  --sidebar-ring: #2260f6;
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.06);
+}
+
+/*
+ * Dark mode is out of scope for this port: the reference design (see design.md) is a
+ * light, flat admin console and every colour in :root was sampled from it. The stock
+ * shadcn dark palette that shipped with the template was removed rather than left in
+ * place — keeping it would mean a stray `.dark` class silently swaps the product to an
+ * unrelated monochrome theme. `@custom-variant dark` is left defined so `dark:`
+ * utilities still compile; they simply have nothing to switch to.
+ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    /* IBM Plex Sans is loaded in index.html. Chosen for genuine tabular numerals —
+       this product puts money and quantities in every table. */
+    font-family:
+      "IBM Plex Sans",
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  /* Money and quantity columns must not shift width between rows. */
+  .tabular,
+  th.numeric,
+  td.numeric {
+    font-variant-numeric: tabular-nums;
+  }
+  th.numeric,
+  td.numeric {
+    text-align: right;
+  }
+}
+
+@utility card-surface {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
